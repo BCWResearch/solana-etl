@@ -42,8 +42,6 @@ jobs:
         go build main.go
 
     - name: Upload Release Asset
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         gh auth login --with-token <<< ${{ secrets.GITHUB_TOKEN }}
         gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
