@@ -36,7 +36,6 @@ jobs:
       env:
         CGO_ENABLED: 0
         GOOS: linux
-        PATH: $HOME/.local/bin:$PATH
       run: |
         cd ${{ env.GOMODULE_DIR }}
         go generate
