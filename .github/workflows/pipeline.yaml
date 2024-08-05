@@ -28,8 +28,10 @@ jobs:
     needs: determine-job
     if: needs.determine-job.outputs.run-extractor-job == 'true'
     uses: ./.github/workflows/extractor-build.yaml
+            
 
   trigger-inserter-build:
     needs: determine-job
     if: needs.determine-job.outputs.run-inserter-job == 'true'
-    uses: ./.github/workflows/inserter-build.yaml
+    uses: ./.github/workflows/insterter-build.yaml
+            
