@@ -1,7 +1,10 @@
 name: inserter-build
+# on:
+#   workflow_call:
 on:
-  workflow_call:
-
+  push:
+    branches:
+      - main
 env:
   GOMOD: ${{ github.workspace }}/storage-write/deprecated/go.mod
   GOMODULE_DIR:  ${{ github.workspace }}/storage-write/deprecated
@@ -35,10 +38,11 @@ jobs:
         cd ${{ env.GOMODULE_DIR }}
         ls -la 
         go generate
+        ls -la 
         go build main.go
 
-    - name: Upload Release Asset
-      run: |
-        gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
-      env:
-        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+    # - name: Upload Release Asset
+    #   run: |
+    #     gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
+    #   env:
+    #     GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
