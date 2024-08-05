@@ -36,13 +36,16 @@ jobs:
       env:
         CGO_ENABLED: 0
         GOOS: linux
+        PATH: $HOME/.local/bin:$PATH
       run: |
         cd ${{ env.GOMODULE_DIR }}
         go generate
-        go build main.go
+        go build -o ${{ github.workspace }}/target/release/blockchain_etl_inserter main.go
 
     - name: Upload Release Asset
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh auth login --with-token <<< ${{ secrets.GITHUB_TOKEN }}
-        gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
+        echo $GITHUB_TOKEN | gh auth login --with-token
+        gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber --name "blockchain_etl_inserter_v${{ github.event.release.tag_name }}"
 
