@@ -33,8 +33,9 @@ jobs:
         GOOS: linux
       run: |
         cd ${{ env.GOMODULE_DIR }}
+        ls -la 
         go generate
-        go build
+        go build main.go
 
     - name: Upload Release Asset
       run: |
