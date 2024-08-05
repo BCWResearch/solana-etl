@@ -28,7 +28,7 @@ jobs:
         cargo build --release --features "SOLANA,RABBITMQ_CLASSIC,SINGLE_PUBLISHER"
 
     - name: Upload Release Asset
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_indexer --clobber
-      env:
-        GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
