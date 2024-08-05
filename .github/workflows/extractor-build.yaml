@@ -5,6 +5,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    env: 
+      GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
     steps:
     - name: Install required tools
       run: |
