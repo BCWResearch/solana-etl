@@ -37,14 +37,15 @@ jobs:
         unzip protoc-${{ env.PROTOC_VERSION }}-linux-x86_64.zip -d $HOME/.local
         which protoc 
         protoc --version
-        
+
 
     - name: Build
       env:
         CGO_ENABLED: 0
         GOOS: linux
-        PATH: $HOME/.local/bin:$PATH
       run: |
+        which protoc 
+        protoc --version
         cd ${{ env.GOMODULE_DIR }}
         ls -la 
         go generate
