@@ -5,7 +5,6 @@ on:
 env:
   GOMOD: ${{ github.workspace }}/storage-write/deprecated/go.mod
   GOMODULE_DIR:  ${{ github.workspace }}/storage-write/deprecated
-  GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
   GO_VERSION: '1.20.x'
   PROTOC_VERSION: '23.2'
 
@@ -38,7 +37,6 @@ jobs:
         CGO_ENABLED: 0
         GOOS: linux
       run: |
-        which protoc 
         protoc --version
         cd ${{ env.GOMODULE_DIR }}
         go generate
@@ -48,4 +46,4 @@ jobs:
       run: |
         gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
       env:
-        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
