@@ -1,10 +1,7 @@
 name: inserter-build
-# on:
-#   workflow_call:
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+
 env:
   GOMOD: ${{ github.workspace }}/storage-write/deprecated/go.mod
   GOMODULE_DIR:  ${{ github.workspace }}/storage-write/deprecated
@@ -35,10 +32,7 @@ jobs:
       run: |
         curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${{ env.PROTOC_VERSION }}/protoc-${{ env.PROTOC_VERSION }}-linux-x86_64.zip
         unzip protoc-${{ env.PROTOC_VERSION }}-linux-x86_64.zip -d $HOME/.local
-        which protoc 
-        protoc --version
-
-
+  
     - name: Build
       env:
         CGO_ENABLED: 0
@@ -47,13 +41,11 @@ jobs:
         which protoc 
         protoc --version
         cd ${{ env.GOMODULE_DIR }}
-        ls -la 
         go generate
-        ls -la 
         go build main.go
 
-    # - name: Upload Release Asset
-    #   run: |
-    #     gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
-    #   env:
-    #     GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+    - name: Upload Release Asset
+      run: |
+        gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
