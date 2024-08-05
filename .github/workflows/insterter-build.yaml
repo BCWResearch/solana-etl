@@ -1,9 +1,6 @@
-name: build
+name: inserter-build
 on:
-  release:
-    types: [created]
-    tags:
-      - 'inserter*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,7 +14,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        export GOMOD=$GITHUB_WORKSPACE/subscriber_rabbitmq/go.mod
+        export GOMOD=$GITHUB_WORKSPACE/storage-write/subscriber_rabbitmq/go.mod
         sudo apt-get update && sudo apt-get install -y protobuf-compiler g++
         go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
         go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
@@ -30,8 +27,8 @@ jobs:
         CGO_ENABLED: 0
         GOOS: linux
       run: |
-        export GOMOD=$GITHUB_WORKSPACE/subscriber_rabbitmq/go.mod
-        cd subscriber_rabbitmq
+        export GOMOD=$GITHUB_WORKSPACE/storage-write/subscriber_rabbitmq/go.mod
+        cd storage-write/subscriber_rabbitmq
         go generate
         go build
 

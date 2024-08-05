@@ -1,9 +1,6 @@
-name: build
+name: extractor-build
 on:
-  release:
-    types: [created]
-    tags:
-      - 'extractor*'
+  workflow_dispatch:
 
 jobs:
   build:
