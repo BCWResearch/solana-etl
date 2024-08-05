@@ -3,8 +3,8 @@ on:
   workflow_call:
 
 env:
-  GOMOD: ${{ github.workspace }}/storage-write/subscriber_rabbitmq/go.mod
-  GOMODULE_DIR:  ${{ github.workspace }}/storage-write/subscriber_rabbitmq
+  GOMOD: ${{ github.workspace }}/storage-write/deprecated/go.mod
+  GOMODULE_DIR:  ${{ github.workspace }}/storage-write/deprecated
   GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
   GO_VERSION: '1.20.x'
 
