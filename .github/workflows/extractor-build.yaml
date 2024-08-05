@@ -11,8 +11,8 @@ jobs:
     steps:
     - name: Install required tools
       run: |
-        apt-get update
-        apt-get install -y git unzip protobuf-compiler build-essential curl
+        sudo apt-get update
+        sudo apt-get install -y git unzip protobuf-compiler build-essential curl
 
     - uses: actions/checkout@v4
       with:
@@ -27,6 +27,9 @@ jobs:
       run: |
         export RUSTFLAGS="-C target-cpu=x86-64"
         cargo build --release --features "SOLANA,RABBITMQ_CLASSIC,SINGLE_PUBLISHER"
+
+    - name: testGh
+      run: gh version 
 
     - name: Install GitHub CLI
       run: |
