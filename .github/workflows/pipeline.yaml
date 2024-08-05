@@ -33,5 +33,5 @@ jobs:
   trigger-inserter-build:
     needs: determine-job
     if: needs.determine-job.outputs.run-inserter-job == 'true'
-    uses: ./.github/workflows/insterter-build.yaml
+    uses: ./.github/workflows/inserter-build.yaml
             
