@@ -35,8 +35,9 @@ jobs:
       run: |
         curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${{ env.PROTOC_VERSION }}/protoc-${{ env.PROTOC_VERSION }}-linux-x86_64.zip
         unzip protoc-${{ env.PROTOC_VERSION }}-linux-x86_64.zip -d $HOME/.local
-        export PATH="$HOME/.local/bin:$PATH"
+        which protoc 
         protoc --version
+        
 
     - name: Build
       env:
