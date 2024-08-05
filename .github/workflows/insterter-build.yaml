@@ -1,0 +1,42 @@
+name: build
+on:
+  release:
+    types: [created]
+    tags:
+      - 'inserter*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.20.x'
+
+    - name: Install dependencies
+      run: |
+        export GOMOD=$GITHUB_WORKSPACE/subscriber_rabbitmq/go.mod
+        sudo apt-get update && sudo apt-get install -y protobuf-compiler g++
+        go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+        cd subscriber_rabbitmq
+        go mod tidy
+        go mod download
+
+    - name: Build
+      env:
+        CGO_ENABLED: 0
+        GOOS: linux
+      run: |
+        export GOMOD=$GITHUB_WORKSPACE/subscriber_rabbitmq/go.mod
+        cd subscriber_rabbitmq
+        go generate
+        go build
+
+    - name: Upload Release Asset
+      run: |
+        gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_inserter --clobber
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}

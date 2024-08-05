@@ -28,14 +28,6 @@ jobs:
         export RUSTFLAGS="-C target-cpu=x86-64"
         cargo build --release --features "SOLANA,RABBITMQ_CLASSIC,SINGLE_PUBLISHER"
 
-    - name: testGh
-      run: gh version 
-
-    - name: Install GitHub CLI
-      run: |
-        curl -sSL https://github.com/cli/cli/releases/download/v2.28.0/gh_2.28.0_linux_amd64.tar.gz | tar xz
-        sudo mv gh_2.28.0_linux_amd64/bin/gh /usr/local/bin/gh
-
     - name: Upload Release Asset
       run: |
         gh release upload ${{ github.event.release.tag_name }} target/release/blockchain_etl_indexer --clobber
